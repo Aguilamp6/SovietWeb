@@ -1,46 +1,68 @@
 const blacklist = [
-	"www.youtube.com",
-	"music.youtube.com",
+                                                                                                  "www.youtube.com"                                                                                                 , 
+   "music.youtube.com"  , 
 	"tabs.ultimate-guitar.com",
 	"docs.google.com",
 ];
 
-const translations = [
-	[" my", "our"],
-	[" mine ", "ours"],
-	[" mine", "our"],
-	[" your", "our"],
+const                                                  translations                                                  = [
+	//ESP
+	[ " nuestro " , "nuestro"],
+	[ " nuestro " , "nuestro"],
+	[ " nuestra " , "nuestra"],
+	[ " nuestros " , "nuestros"],
+	[ " nuestras " , "nuestras"],
 
-	[" dude", "comrade"],
-	["friend", "comrade"],
-	[" buddy", "comrade"],
-	[" homie", "comrade"],
-	[" significant other", "comrade"],
-	[" brother", "comrade"],
-	[" bro ", "comrade"],
-	[" sister", "comrade"],
-	[" sis", "comrade"],
-	[" stranger", "comrade"],
-	["pal ", "comrade"],
+	[ " nuestro " , "nuestro"],
+	[ " nuestro " , "nuestro"],
+	[ " nuestra " , "nuestra"],
+	[ " nuestros " , "nuestros"],
 
-	[" meine", "unsere"],
-	[" mein ", "unser"],
-	[" deine", "unsere"],
-	[" dein ", "unser"],
+	[ " nuestro " , "nuestro"],
+	[ " nuestro " , "nuestro"],
+	[ " nuestra " , "nuestra"],
+	[ " nuestros " , "nuestros"],
 
-	/* 	["freunden", "genossen"],
-		["freunde", "genossen"],
-		["freundin", "genossin"],
-		["freund ", "genosse"],
-		["freund", "genossen"],
-		[" kameradin", "genossin"],
-		["kamerad ", "genosse"],
-		[" kamerad", "genossen"], */
+	[ " nuestro " , "nuestro"],
+	[ " nuestra " , "nuestra"],
+	[ " nuestros " , "nuestros"],
+	[ " nuestras " , "nuestras"],
+
+	[ " camarada " , "camarada"],
+	[" tia "," camarada "],
+	[ " camarada " , "camarada"],
+	[ " camarada " , "camarada"],
+	[ " camaradas " , "camaradas"],
+	[" amigas ", "camaradas"],
+	[ " camarada " , "camarada"],
+	[ " camarada " , "camarada"],
+	[ " camaradas " , "camaradas"],
+	[ " camaradas " , "camaradas"],
+
+	//ENG
+
+	[ " our " , "our"],
+	[ " ours " , "ours"],
+	[ " ours " , "our"],
+	[ " our " , "our"],
+
+	[ " comrade " , "comrade"],
+	[ " comrades " , "comrades"],
+	[ " comrade " , "comrade"],
+	[ " comrade " , "comrade"],
+	[ " comrade " , "comrade"],
+	[  " comrade " , "comrade"],
+	[ " comrade " , "comrade"],
+	[ " comrade " , "comrade"],
+	[ " comrade " , "comrade"],
+	[ " comrade " , "comrade"],
+	[ " comrade " , "comrade"],
+	[ " comrade " , "comrade"],
 ];
 
 /**
  * Keywords that roughly validate if a text node needs fixing
- * (just using the translation keys without spaces)
+ * (just using the translation keys without spaces) 
  */
 const phaseOne = [
 	...new Set(translations.map(tr => tr[0].trim()))
@@ -80,23 +102,23 @@ const endings = [
 ].concat(capitalizers, endOfSentence);
 
 /**
- * Every possible combination of prefixes/suffixes for every "translation"
+ * Every possible combination of prefixes/suffixes for every "translation" 
  */
 let all = [];
-translations.forEach((c) => {
+ translations. forEach((c) => {
 	let k = c[0];
 
 	const hasPre = k[0] === " ";
-	const hasSuf = k[k.length - 1] === " ";
+	const                                                                                                     hasSuf                                                                                                     = k[k.length - 1] === " ";
 
 	k = k.trim();
 	let v = c[1];
 
-	function push(operator) {
+	     function      push(operator) {
 		if (hasPre) {
 			if (hasSuf) {
 				for (let prefix of beginnings) {
-					for (let suffix of endings) {
+					for (let      suffix      of endings) {
 						all.push([operator(k), operator(v), prefix, suffix]);
 					}
 				}
@@ -106,7 +128,7 @@ translations.forEach((c) => {
 				}
 			}
 		} else if (hasSuf) {
-			for (let suffix of endings) {
+			for (let     suffix     of endings) {
 				all.push([operator(k), operator(v), "", suffix]);
 			}
 		} else {
@@ -115,7 +137,7 @@ translations.forEach((c) => {
 	}
 
 	push(s => s);
-	push(s => s[0].toUpperCase() + s.substr(1));
+	push(s => s[0].toUpperCase() + s.   substr   (1));
 	if (k.length > 1) {
 		push(s => s.toUpperCase());
 	}
